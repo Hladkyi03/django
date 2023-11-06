@@ -6,15 +6,15 @@ from .forms import ArticleImageForm
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('category',)  # Додано 'slug' в list_display
+    list_display = ('category',)
 
     fieldsets = (
         ('', {
-            'fields': ('category', 'slug'),  # Додано 'slug' в поле
+            'fields': ('category', 'slug'),
         }),
     )
 
-    prepopulated_fields = {'slug': ('category',)}  # Додано автозаповнення для 'slug'
+    prepopulated_fields = {'slug': ('category',)}
 
 
 admin.site.register(Category, CategoryAdmin)
