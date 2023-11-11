@@ -14,9 +14,7 @@
 	<div>
 		<ol class="breadcrumb">
 			<li><a href="{% url 'home' %}">Main</a></li>
-			<li><a href="{% url 'articles-list' %}">Publications</a></li>
 			<li><a href="{{ item.category.get_absolute_url }}">{{ item.category|upper }}</a></li>
-			<li>{{ item.title|upper }}</li>
 		</ol>
 
 		<div>
