@@ -1,16 +1,15 @@
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
 
 
 class Category(models.Model):
-    category = models.CharField("Категорія", max_length=250, help_text="Максимум 250 символів")
+    category = models.CharField("Category", max_length=250, help_text="Maximum 250 characters")
     slug = models.SlugField("Slug", default="")
 
     class Meta:
-        verbose_name = "Категорія для публікації"
-        verbose_name_plural = "Категорії для публікації"
+        verbose_name = "Category for publication"
+        verbose_name_plural = "Categories for publications"
 
     def __str__(self):
         return self.category
@@ -25,14 +24,14 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-    title = models.CharField("Заголовок", max_length=250, help_text="Максимум 250 символів")
-    description = models.TextField(blank=True, verbose_name="Опис")
-    pub_date = models.DateTimeField("Дата публікації", default=timezone.now)
+    title = models.CharField("Title", max_length=250, help_text="Maximum 250 characters")
+    description = models.TextField(blank=True, verbose_name="Description")
+    pub_date = models.DateTimeField("Date of publication", default=timezone.now)
     slug = models.SlugField("Slug", unique_for_date="pub_date")
-    main_page = models.BooleanField("Головна", default=False, help_text="Показувати на головній сторінці")
+    main_page = models.BooleanField("Main", default=False, help_text="Show on the main page")
 
     category = models.ForeignKey(
-        Category, related_name="articles", blank=True, null=True, verbose_name="Категорія", on_delete=models.CASCADE
+        Category, related_name="articles", blank=True, null=True, verbose_name="Category", on_delete=models.CASCADE
     )
 
     def get_absolute_url(self):
@@ -53,25 +52,25 @@ class Article(models.Model):
 
     class Meta:
         ordering = ["-pub_date"]
-        verbose_name = "Стаття"
-        verbose_name_plural = "Статті"
+        verbose_name = "Article"
+        verbose_name_plural = "Articles"
 
     def __str__(self):
         return self.title
 
 
 class ArticleImage(models.Model):
-    article = models.ForeignKey(Article, verbose_name="Статті", related_name="зображення", on_delete=models.CASCADE)
-    image = models.ImageField("Зображення", upload_to="photos")
-    title = models.CharField("Заголовок", max_length=250, help_text="Максимум 250 символів", blank=True)
+    article = models.ForeignKey(Article, verbose_name="Article", related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField("Photo", upload_to="photos")
+    title = models.CharField("Title", max_length=250, help_text="Maximum 250 characters", blank=True)
 
     @property
     def filename(self):
         return self.image.name.rsplit("/", 1)[-1]
 
     class Meta:
-        verbose_name = "Зображення для статті"
-        verbose_name_plural = "Зображення для статті"
+        verbose_name = "Article Photo"
+        verbose_name_plural = "Article Photos"
 
     def __str__(self):
         return self.title

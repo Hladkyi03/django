@@ -13,8 +13,10 @@
 <body>
 	<div>
 		<ol class="breadcrumb">
-			<li><a href="{% url 'home' %}">Головнна</a></li>
+			<li><a href="{% url 'home' %}">Main</a></li>
+			<li><a href="{% url 'articles-list' %}">Publications</a></li>
 			<li><a href="{{ item.category.get_absolute_url }}">{{ item.category|upper }}</a></li>
+			<li>{{ item.title|upper }}</li>
 		</ol>
 
 		<div>
@@ -28,6 +30,7 @@
 			{% if item.images.all %}
 			{% include 'fotorama.html' with images=images %}
 			{% endif %}
+
 		</div>
 		<div class='clearfix'></div>
 	</div>
